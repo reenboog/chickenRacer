@@ -40,10 +40,41 @@
 //        transmissionMenu.position = ccp(970, 26);
 //        
 //        [self addChild: transmissionMenu];
+        
+        pointsLabel = [CCLabelBMFont labelWithString: @"" fntFile: @"bip_big.fnt"];
+        pointsLabel.anchorPoint = ccp(1, 0.5);
+        pointsLabel.position = ccp(1010, 740);
+        
+        [self addChild: pointsLabel];
+        
+        timeLabel = [CCLabelBMFont labelWithString: @"" fntFile: @"bip_big.fnt"];
+        timeLabel.anchorPoint = ccp(1, 0.5);
+        timeLabel.position = ccp(1010, 710);
+        
+        [self addChild: timeLabel];
     }
 
     return self;
 }
+
+- (void) setPoints: (NSInteger) points
+{
+    pointsLabel.string = [NSString stringWithFormat: @"points: %i", points];
+}
+
+- (void) setTime: (NSInteger) seconds
+{
+    NSString *time = nil;
+    
+    NSInteger minutes = seconds / 60;
+    NSInteger restSeconds = seconds % 60;
+    
+    NSString *minutesStr = minutes > 10 ? [NSString stringWithFormat: @"%i", minutes] : [NSString stringWithFormat: @"0%i", minutes];
+    NSString *secondsStr = restSeconds > 10 ? [NSString stringWithFormat: @"%i", restSeconds] : [NSString stringWithFormat: @"0%i", restSeconds];
+    
+    timeLabel.string = [NSString stringWithFormat: @"time: %@:%@", minutesStr, secondsStr];
+}
+
 
 //- (void) goForward
 //{

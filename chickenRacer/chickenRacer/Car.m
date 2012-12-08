@@ -7,6 +7,8 @@
 @synthesize canMakeStep;
 @synthesize direction;
 
+@synthesize gameDelegate;
+
 - (void) dealloc
 {
     [super dealloc];
@@ -48,8 +50,27 @@
     canMakeStep = YES;
 }
 
-- (void) setInitialDirection: (CGPoint) pt
+- (void) setInitialDirection: (NSString *) dir
 {
+    CGPoint pt;
+    
+    if([dir isEqualToString: @"right"])
+    {
+        pt = ccp(1, 0);
+    }
+    else if([dir isEqualToString: @"left"])
+    {
+        pt = ccp(-1, 0);
+    }
+    else if([dir isEqualToString: @"up"])
+    {
+        pt = ccp(0, 1);
+    }
+    else if([dir isEqualToString: @"down"])
+    {
+        pt = ccp(0, -1);
+    }
+    
     direction = pt;
     float angle = 0;
     
@@ -79,22 +100,29 @@
     
 }
 
-- (void) makeStep
+- (CGPoint) makeStep
 {
     CCLOG(@"step");
     
     CGPoint delta = ccpMult(direction, kStep);
+    CGPoint pos = ccpAdd(self.position, delta);
     
     [self runAction:
-                    [CCEaseBackOut actionWithAction:
-                                                    [CCMoveBy actionWithDuration: 0.2 position: delta]
+                    [CCSequence actions:
+                                    [CCEaseBackOut actionWithAction:
+                                                                    [CCMoveBy actionWithDuration: 0.2 position: delta]
+                                    ],
+                                    [CCCallFunc actionWithTarget: self.gameDelegate selector: @selector(checkState)],
+                                    nil
                     ]
     ];
+    
+    return pos;
 }
 
 - (BOOL) canMakeStep
 {
-    return canMakeStep;
+    return [self numberOfRunningActions] == 0;//canMakeStep;
 }
 
 - (void) turnByAngle: (float) angle
@@ -104,8 +132,8 @@
     direction = ccpRotateByAngle(direction, ccp(0, 0), CC_DEGREES_TO_RADIANS(-angle));
 
     float a = CC_DEGREES_TO_RADIANS(sprite.rotation + angle);
-    float x = direction.x * cosf(a) - direction.y * sinf(a);
-    float y = direction.x * sinf(a) + direction.y * cosf(a);
+//    float x = direction.x * cosf(a) - direction.y * sinf(a);
+//    float y = direction.x * sinf(a) + direction.y * cosf(a);
     
     [sprite runAction:
                     [CCSequence actions:
@@ -138,6 +166,26 @@
 {
     CCLOG(@"turning around.");
     [self turnByAngle: -180];
+}
+
+- (void) turnToDirection: (CGPoint) dir
+{
+    CCLOG(@"turning by direction: %f, %f", dir.x, dir.y);
+    
+    float angle = atan2f(dir.y, dir.x) - atan2(direction.y, direction.x);
+    angle = CC_RADIANS_TO_DEGREES(angle);
+    
+    if(fabs(angle) > 180)
+    {
+        angle = 360 - angle;
+        angle *= - 1;
+    }
+    
+    //angle = atan2f(1, 1);
+
+    CCLOG(@"resulting angle: %f", angle);
+    
+    [self turnByAngle: -angle];
 }
 
 @end

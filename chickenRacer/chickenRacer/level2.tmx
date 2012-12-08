@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="16" height="12" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="roads" tilewidth="64" tileheight="64">
+  <image source="road_tiles.png" width="320" height="128"/>
+  <tile id="2">
+   <properties>
+    <property name="isRoad" value="1"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="right" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="spawnPoint" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="11" name="meta" tilewidth="64" tileheight="64">
+  <image source="meta.png" width="192" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="isTurn" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="type" value="hl"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="type" value="hr"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="isStar" value="true"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="type" value="vb"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="type" value="vt"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="backGround" width="16" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBzFo3iEYgAkjwDB
+  </data>
+ </layer>
+ <layer name="road" width="16" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYIAAViBmxoHZGAgDJjLliNVPyB0cDLjdzYRGEwvQ9WHTjy+8iNFPir300g8LS3Yy9eMyDxseaAAAMSMArg==
+  </data>
+ </layer>
+ <objectgroup name="objects" width="16" height="12">
+  <object name="spawnPoint" x="28" y="351">
+   <properties>
+    <property name="direction" value="right"/>
+   </properties>
+  </object>
+  <object name="finish" x="978" y="594" width="34" height="34"/>
+  <object name="timer" x="34" y="44">
+   <properties>
+    <property name="time" value="300"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer name="turns" width="16" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYIAAbgbcAJ8cPQA3Go1PDSExaoOBspeWgJjwHkjzqAkA7UQAhQ==
+  </data>
+ </layer>
+ <layer name="stars" width="16" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFtAJ8BPjkmjMKqAcAQxgAKw==
+  </data>
+ </layer>
+ <layer name="crosses" width="16" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAe4CVTDhkIUMMhWAAPjdVTA/BT0SxYOFLbH8TGI7UBNcMGGQAA5GAAig==
+  </data>
+ </layer>
+</map>
